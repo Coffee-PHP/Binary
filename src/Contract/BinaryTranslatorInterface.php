@@ -21,10 +21,9 @@
  * @since 2020-08-07
  */
 
-declare (strict_types=1);
+declare(strict_types=1);
 
 namespace CoffeePhp\Binary\Contract;
-
 
 use CoffeePhp\Edi\Contract\EdiTranslatorInterface;
 
