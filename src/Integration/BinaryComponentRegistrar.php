@@ -25,7 +25,6 @@ declare(strict_types=1);
 
 namespace CoffeePhp\Binary\Integration;
 
-
 use CoffeePhp\Binary\BinaryTranslator;
 use CoffeePhp\Binary\Contract\BinaryTranslatorInterface;
 use CoffeePhp\ComponentRegistry\Contract\ComponentRegistrarInterface;
