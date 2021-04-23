@@ -30,9 +30,6 @@ use CoffeePhp\Binary\Exception\BinarySerializeException;
 use CoffeePhp\Binary\Exception\BinaryUnserializeException;
 use Throwable;
 
-use function get_class;
-use function is_array;
-use function is_object;
 use function serialize;
 use function unserialize;
 
@@ -51,14 +48,8 @@ final class BinaryTranslator implements BinaryTranslatorInterface
     {
         try {
             return serialize($array);
-        } catch (BinarySerializeException $e) {
-            throw $e;
         } catch (Throwable $e) {
-            throw new BinarySerializeException(
-                "Failed to serialize data: {$e->getMessage()}",
-                (int)$e->getCode(),
-                $e
-            );
+            throw new BinarySerializeException($e->getMessage(), (int)$e->getCode(), $e);
         }
     }
 
@@ -69,41 +60,21 @@ final class BinaryTranslator implements BinaryTranslatorInterface
     public function unserializeArray(string $string): array
     {
         try {
-            /** @var mixed|array $unserialized */
-            $unserialized = unserialize($string);
-            if (!is_array($unserialized)) {
-                throw new BinaryUnserializeException(
-                    "Data returned from binary string is not an array ; String: $string"
-                );
-            }
-            return $unserialized;
-        } catch (BinaryUnserializeException $e) {
-            throw $e;
+            return (array)unserialize($string);
         } catch (Throwable $e) {
-            throw new BinaryUnserializeException(
-                "Failed to unserialize string: $string ; Error: {$e->getMessage()}",
-                (int)$e->getCode(),
-                $e
-            );
+            throw new BinaryUnserializeException($e->getMessage(), (int)$e->getCode(), $e);
         }
     }
 
     /**
      * @inheritDoc
      */
-    public function serializeObject(object $class): string
+    public function serializeObject(object $object): string
     {
         try {
-            return serialize($class);
-        } catch (BinarySerializeException $e) {
-            throw $e;
+            return serialize($object);
         } catch (Throwable $e) {
-            $className = get_class($class);
-            throw new BinarySerializeException(
-                "Failed to serialize class: $className ; Error: {$e->getMessage()}",
-                (int)$e->getCode(),
-                $e
-            );
+            throw new BinarySerializeException($e->getMessage(), (int)$e->getCode(), $e);
         }
     }
 
@@ -114,22 +85,9 @@ final class BinaryTranslator implements BinaryTranslatorInterface
     public function unserializeObject(string $string): object
     {
         try {
-            /** @var mixed|object $unserialized */
-            $unserialized = unserialize($string);
-            if (!is_object($unserialized)) {
-                throw new BinaryUnserializeException(
-                    "Data returned from binary string failed to unserialize into an object: $string"
-                );
-            }
-            return $unserialized;
-        } catch (BinaryUnserializeException $e) {
-            throw $e;
+            return (object)unserialize($string);
         } catch (Throwable $e) {
-            throw new BinaryUnserializeException(
-                "Failed to unserialize string: $string ; Error: {$e->getMessage()}",
-                (int)$e->getCode(),
-                $e
-            );
+            throw new BinaryUnserializeException($e->getMessage(), (int)$e->getCode(), $e);
         }
     }
 }

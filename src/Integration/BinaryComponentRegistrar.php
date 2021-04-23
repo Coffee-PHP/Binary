@@ -29,12 +29,6 @@ use CoffeePhp\Binary\BinaryTranslator;
 use CoffeePhp\Binary\Contract\BinaryTranslatorInterface;
 use CoffeePhp\ComponentRegistry\Contract\ComponentRegistrarInterface;
 use CoffeePhp\Di\Contract\ContainerInterface;
-use CoffeePhp\Edi\Contract\EdiArrayTranslatorInterface;
-use CoffeePhp\Edi\Contract\EdiExtendedArrayTranslatorInterface;
-use CoffeePhp\Edi\Contract\EdiObjectTranslatorInterface;
-use CoffeePhp\Edi\Contract\EdiTranslatorInterface;
-use CoffeePhp\Serialize\Contract\SerializerInterface;
-use CoffeePhp\Unserialize\Contract\UnserializerInterface;
 
 /**
  * Class BinaryComponentRegistrar
@@ -44,21 +38,19 @@ use CoffeePhp\Unserialize\Contract\UnserializerInterface;
  */
 final class BinaryComponentRegistrar implements ComponentRegistrarInterface
 {
+    /**
+     * BinaryComponentRegistrar constructor.
+     */
+    public function __construct(private ContainerInterface $di)
+    {
+    }
 
     /**
      * @inheritDoc
      */
-    public function register(ContainerInterface $di): void
+    public function register(): void
     {
-        $di->bind(SerializerInterface::class, BinaryTranslatorInterface::class);
-        $di->bind(UnserializerInterface::class, BinaryTranslatorInterface::class);
-
-        $di->bind(EdiArrayTranslatorInterface::class, BinaryTranslatorInterface::class);
-        $di->bind(EdiExtendedArrayTranslatorInterface::class, BinaryTranslatorInterface::class);
-        $di->bind(EdiObjectTranslatorInterface::class, BinaryTranslatorInterface::class);
-        $di->bind(EdiTranslatorInterface::class, BinaryTranslatorInterface::class);
-
-        $di->bind(BinaryTranslatorInterface::class, BinaryTranslator::class);
-        $di->bind(BinaryTranslator::class, BinaryTranslator::class);
+        $this->di->bind(BinaryTranslatorInterface::class, BinaryTranslator::class);
+        $this->di->bind(BinaryTranslator::class, BinaryTranslator::class);
     }
 }

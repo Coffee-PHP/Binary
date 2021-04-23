@@ -29,6 +29,7 @@ namespace CoffeePhp\Binary\Test\Integration;
 use CoffeePhp\Binary\BinaryTranslator;
 use CoffeePhp\Binary\Contract\BinaryTranslatorInterface;
 use CoffeePhp\Binary\Integration\BinaryComponentRegistrar;
+use CoffeePhp\ComponentRegistry\ComponentRegistry;
 use CoffeePhp\Di\Container;
 use CoffeePhp\Di\Contract\ContainerInterface;
 use CoffeePhp\Edi\Contract\EdiArrayTranslatorInterface;
@@ -61,8 +62,8 @@ final class BinaryComponentRegistrarTest extends TestCase
     {
         parent::setUpBeforeClass();
         self::$di = new Container();
-        $registrar = new BinaryComponentRegistrar();
-        $registrar->register(self::$di);
+        $registry = new ComponentRegistry(self::$di);
+        $registry->register(BinaryComponentRegistrar::class);
     }
 
     /**
@@ -71,62 +72,18 @@ final class BinaryComponentRegistrarTest extends TestCase
     public function testRegister(): void
     {
         assertTrue(
-            self::$di->has(SerializerInterface::class)
-        );
-        assertTrue(
-            self::$di->has(UnserializerInterface::class)
-        );
-        assertTrue(
-            self::$di->has(EdiArrayTranslatorInterface::class)
-        );
-        assertTrue(
-            self::$di->has(EdiExtendedArrayTranslatorInterface::class)
-        );
-        assertTrue(
-            self::$di->has(EdiObjectTranslatorInterface::class)
-        );
-        assertTrue(
-            self::$di->has(EdiTranslatorInterface::class)
-        );
-        assertTrue(
             self::$di->has(BinaryTranslatorInterface::class)
         );
         assertTrue(
             self::$di->has(BinaryTranslator::class)
         );
-
         assertInstanceOf(
             BinaryTranslator::class,
             self::$di->get(BinaryTranslator::class)
         );
-
         assertSame(
             self::$di->get(BinaryTranslator::class),
             self::$di->get(BinaryTranslatorInterface::class)
-        );
-        assertSame(
-            self::$di->get(BinaryTranslatorInterface::class),
-            self::$di->get(EdiTranslatorInterface::class)
-        );
-        assertSame(
-            self::$di->get(BinaryTranslatorInterface::class),
-            self::$di->get(EdiObjectTranslatorInterface::class)
-        );
-        assertSame(
-            self::$di->get(BinaryTranslatorInterface::class),
-            self::$di->get(EdiExtendedArrayTranslatorInterface::class)
-        );
-        assertSame(
-            self::$di->get(BinaryTranslatorInterface::class),
-            self::$di->get(EdiArrayTranslatorInterface::class)
-        );
-        assertSame(
-            self::$di->get(BinaryTranslatorInterface::class),
-            self::$di->get(SerializerInterface::class)
-        );
-        assertSame(
-            self::$di->get(BinaryTranslatorInterface::class),
-            self::$di->get(UnserializerInterface::class)
         );
     }
 }
