@@ -32,12 +32,6 @@ use CoffeePhp\Binary\Integration\BinaryComponentRegistrar;
 use CoffeePhp\ComponentRegistry\ComponentRegistry;
 use CoffeePhp\Di\Container;
 use CoffeePhp\Di\Contract\ContainerInterface;
-use CoffeePhp\Edi\Contract\EdiArrayTranslatorInterface;
-use CoffeePhp\Edi\Contract\EdiExtendedArrayTranslatorInterface;
-use CoffeePhp\Edi\Contract\EdiObjectTranslatorInterface;
-use CoffeePhp\Edi\Contract\EdiTranslatorInterface;
-use CoffeePhp\Serialize\Contract\SerializerInterface;
-use CoffeePhp\Unserialize\Contract\UnserializerInterface;
 use PHPUnit\Framework\TestCase;
 
 use function PHPUnit\Framework\assertInstanceOf;
