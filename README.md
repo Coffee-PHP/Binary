@@ -1,5 +1,7 @@
 # Coffee PHP - Binary
 
+![Build](https://github.com/Coffee-PHP/Binary/workflows/Build/badge.svg)
+
 Provides classes for handling PHP-Serialized (Binary) data.
 
 ```
